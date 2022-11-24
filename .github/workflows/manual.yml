@@ -3,10 +3,12 @@ name: dsync services
 on:
   push:
     branches:
-      - master
       - 'fix/**'
-      - 'feature/**'
   workflow_dispatch:
+    inputs:
+      commitMessage:
+        description: commit
+        required: true
 
 jobs:
   PostgreSQL-Tests:
