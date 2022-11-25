@@ -28,7 +28,26 @@ jobs:
         run: echo ${GITHUB_REF_NAME}
 
   Deploy:
-    if: startsWith(github.ref_name, 'master')
+    if: github.event_name != 'pull_request' && ( startsWith(github.ref_name, 'feature/') || github.ref_name == 'master' )
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Java
+        uses: actions/setup-java@v3
+        with:
+          distribution: adopt
+          java-version: 11
+
+      - name: ${{ github.event.inputs.commitMessage }} Run script
+        run: echo "hEllo world"
+
+  Relaease:
+    if: ( startsWith(github.ref_name, 'feature/')  || startsWith(github.ref_name, 'support/') || github.ref_name == 'master' )  &&
+        ${{ contains(github.event.head_commit.message, '[release]') && inputs.commitMessage == 'release' }} &&
+        github.event_name != 'pull_request'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
