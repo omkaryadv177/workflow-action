@@ -60,5 +60,5 @@ jobs:
           distribution: adopt
           java-version: 11
 
-      - name: ${{ github.event.inputs.commitMessage }} Run script
+      - name: ${{ github.event.inputs.commitMessage }} Run script a
         run: echo "hEllo world"
