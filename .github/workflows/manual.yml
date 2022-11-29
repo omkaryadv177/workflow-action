@@ -15,8 +15,12 @@ on:
         description: Enter the Commit Message
         required: true
 
-  test:
+jobs:
+  build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        stage: [ build , source_clear, e2e_tests ]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -28,6 +32,7 @@ on:
           distribution: adopt
           java-version: 17
 
-      - name: Run
+      - name: Run ${{ matrix.stage }}
         run: |
+          echo "${{ matrix.stage }}" 
           echo "hello bro how"
