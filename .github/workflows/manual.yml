@@ -16,7 +16,7 @@ on:
         required: true
 
 jobs:
-  build:
+  Run:
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -33,6 +33,7 @@ jobs:
           java-version: 17
 
       - name: Run ${{ matrix.stage }}
+        if: github.ref_name != 'company_release' && ( ${{ matrix.stage }}== build || ${{ matrix.stage }}== e2e_tests )
         run: |
           echo "${{ matrix.stage }}" 
           echo "hello bro how"
