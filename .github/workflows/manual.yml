@@ -15,7 +15,7 @@ on:
         description: Enter the Commit Message
         required: true
 
-  build:
+  test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
