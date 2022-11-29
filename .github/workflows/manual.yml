@@ -16,7 +16,7 @@ on:
         required: true
 
 jobs:
-  Run:
+  ${{ matrix.stage }}:
     runs-on: ubuntu-latest
     strategy:
       matrix:
