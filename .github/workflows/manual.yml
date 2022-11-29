@@ -17,9 +17,6 @@ on:
 
   test:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        stage: [ build , source_clear, e2e_tests ]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -31,7 +28,6 @@ on:
           distribution: adopt
           java-version: 17
 
-      - name: Run ${{ matrix.stage }}
+      - name: Run
         run: |
-          echo "${{ matrix.stage }}" 
           echo "hello bro how"
