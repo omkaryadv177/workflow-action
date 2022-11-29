@@ -1,19 +1,25 @@
-name: dsync services
+name: google drive
 
 on:
   push:
     branches:
       - master
+      - 'fix/**'
+      - 'feature/**'
+  pull_request:
+    branches:
+      - master
   workflow_dispatch:
     inputs:
       commitMessage:
-        description: commit
+        description: Enter the Commit Message
         required: true
 
-jobs:
-  PostgreSQL-Tests:
-    if: ${{ !contains(github.event.head_commit.message, '[skip tests]') && inputs.commitMessage != 'skip tests' }}
+  build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        stage: [ build , source_clear, e2e_tests ]
     steps:
       - uses: actions/checkout@v3
         with:
@@ -23,42 +29,9 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: adopt
-          java-version: 11
-      - name: print the staement
-        run: echo ${GITHUB_REF_NAME}
+          java-version: 17
 
-  Deploy:
-    if: github.event_name != 'pull_request' && ( startsWith(github.ref_name, 'feature/') || github.ref_name == 'master' )
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: adopt
-          java-version: 11
-
-      - name: ${{ github.event.inputs.commitMessage }} Run script
-        run: echo "hEllo world"
-
-  Relaease:
-    if: ${{ ( startsWith(github.ref_name, 'feature/')  || startsWith(github.ref_name, 'support/') || github.ref_name == 'master' )  &&
-        contains(github.event.head_commit.message, '[release]') || inputs.commitMessage == 'release'  &&
-        github.event_name != 'pull_request' }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: adopt
-          java-version: 11
-
-      - name: ${{ github.event.inputs.commitMessage }} Run script a
-        run: echo "hEllo wor ld"
+      - name: Run ${{ matrix.stage }}
+        run: |
+          echo "${{ matrix.stage }}" 
+          echo "hello bro how"
