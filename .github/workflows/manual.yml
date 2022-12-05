@@ -4,8 +4,10 @@ on:
   push:
     branches:
       - master
-      - 'fix/**'
-      - 'feature/**'
+      - 'SP/**'
+      - 'HF/**'
+      - company_release
+      - '**GOOGLEDOCS**'
   pull_request:
     branches:
       - master
