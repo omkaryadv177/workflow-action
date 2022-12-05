@@ -38,7 +38,7 @@ jobs:
 
       - name: Run ${{ matrix.stage }}
         run: |
-          echo "${{ github.event.pull_request }}"
+          echo "$github.event.pull_request"
           echo "***************"
           echo "hello {{ matrix.stage }}"
 
