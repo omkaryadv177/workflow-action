@@ -7,7 +7,7 @@ on:
       - 'SP/**'
       - 'HF/**'
       - company_release
-      - '**GOOGLEDOCS**'
+      - 'GOOGLEDOCS**'
   pull_request:
     branches:
       - master
@@ -58,6 +58,7 @@ jobs:
 
       - name: Run Script
         run: |
+          echo "${{ github.event.pull_request }}"
           echo "hello deploy release"
 
 
