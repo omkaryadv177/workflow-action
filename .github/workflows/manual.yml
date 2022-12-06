@@ -60,8 +60,9 @@ jobs:
 
       - name: Run Script
         run: |
-          echo "${{ github.event.pull_request }}"
+          echo "${{ github.event_name }}"
           echo "hello deploy release"
+          bash _ci/run.sh
 
 
   Company-Release:
