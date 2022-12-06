@@ -3,6 +3,6 @@
 echo "****************************************"
 echo "inside script"
 
- [ "${{ github.ref_name }}" = "master" ] && [ "${{ github.event_name }}" != "pull_request" ]
+ [ "$BRANCH_NAME" = "master" ] && [ "$GITHUB_EVENT" != "pull_request" ]
 
  echo "${{ github.event_name }}"
