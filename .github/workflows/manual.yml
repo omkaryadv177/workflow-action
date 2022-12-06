@@ -38,9 +38,9 @@ jobs:
 
       - name: Run ${{ matrix.stage }}
         run: |
-          echo ${{ github.event.pull_request.draft }}
-          echo "***************"
-          echo "hello {{ matrix.stage }}"
+          echo "${{ github.event_name }}"
+          echo "hello deploy release"
+          bash _ci/run.sh
 
   Release:
     if:  ${{ ( startsWith(github.ref_name, 'HF/')  || startsWith(github.ref_name, 'SP/') || github.ref_name == 'master' )  &&
