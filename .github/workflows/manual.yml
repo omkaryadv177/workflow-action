@@ -40,7 +40,7 @@ jobs:
         run: |
           echo "${{ github.event_name }}"
           echo "hello deploy release"
-          bash _ci/run.sh
+          bash ci/run.sh
 
   Release:
     if:  ${{ ( startsWith(github.ref_name, 'HF/')  || startsWith(github.ref_name, 'SP/') || github.ref_name == 'master' )  &&
