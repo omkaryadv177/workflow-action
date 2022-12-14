@@ -24,7 +24,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: windows-2019
     strategy:
       matrix:
         stage: [ build , source_clear, e2e_tests ]
@@ -41,7 +41,10 @@ jobs:
 
       - uses: actions/setup-python@v4
         with:
-          python-version: 3.8.10
+          python-version: 3.8
+
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
 
       - name: Run ${{ matrix.stage }}
         run: |
