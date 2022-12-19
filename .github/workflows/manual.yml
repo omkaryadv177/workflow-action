@@ -43,8 +43,14 @@ jobs:
         with:
           python-version: 3.8
 
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+      - uses: azure/setup-kubectl@v3
+        with:
+          version: '1.21'
+
+      - uses: azure/setup-helm@v3
+        with:
+          version: 'default'
+          token: ${{ secrets.GIT_PASSWORD }}
 
       - name: Run ${{ matrix.stage }}
         run: |
