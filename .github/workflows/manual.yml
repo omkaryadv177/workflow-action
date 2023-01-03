@@ -41,7 +41,7 @@ jobs:
       - uses: azure/setup-kubectl@v3.0
         with:
           version: 'v1.23.6'
-        id: install
+
 
       - name: Run ${{ matrix.stage }}
         run: |
