@@ -43,7 +43,7 @@ jobs:
           version: 'v1.23.6'
 
       - uses: prepor/action-aws-iam-authenticator@master
-        run: aws-iam-authenticator version
+      - run: aws-iam-authenticator version
 
       - name: Run ${{ matrix.stage }}
         run: |
