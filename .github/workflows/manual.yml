@@ -34,6 +34,12 @@ jobs:
         with:
           distribution: adopt
           java-version: 17
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
+        with:
+          # provide access to SSH user that triggered the build
+          limit-access-to-actor: true
+
       - uses: azure/setup-helm@v3
         with:
           version: v3.8.1
