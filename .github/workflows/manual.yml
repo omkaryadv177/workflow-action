@@ -3,6 +3,7 @@ name: dsync services
 on:
   push:
     branches:
+      - omkar
       - master
       - 'SP/**'
       - 'HF/**'
