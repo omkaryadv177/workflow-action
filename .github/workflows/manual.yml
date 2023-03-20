@@ -52,6 +52,15 @@ jobs:
       - uses: azure/setup-helm@v3
         with:
           version: '1.5.0'
+          
+      - name: Install Firefox
+        uses: mozilla/fxdesktop_builds@v3.0.0
+        with:
+          target: firefox-95.0.2
+      - name: Test with Firefox
+        run: |
+          export PATH="$PATH:/home/runner/bin"
+          firefox --version
 
       - name: Run ${{ matrix.stage }}
         run: |
