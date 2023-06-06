@@ -1,23 +1,21 @@
-name: Weekly Pipeline
-
+name:
+  First Cron Job
+ 
+  # Controls when the workflow will run
 on:
+  # Triggers the workflow every 5 minutes
   schedule:
     - cron: "*/1 * * * *"
-
+ 
+      # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  pipeline:
+  # This workflow contains a single job called "cron"
+  cron:
+    # The type of runner that the job will run on
     runs-on: ubuntu-latest
-
+ 
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Check last commit date
-        id: commit_date
-        run: echo "::set-output name=date::$(git show -s --format=%cd --date=format:%Y-%m-%d)"
-
-      - name: Run pipeline if there was a commit this week
-        if: ${{ steps.commit_date.outputs.date != format('{0:yyyy-MM-dd}', github.event.scheduled_time) }}
-        run: |
-          # Run your pipeline commands here
-          echo "Running the pipeline..."
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
