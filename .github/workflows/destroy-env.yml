@@ -4,6 +4,7 @@ on:
   schedule:
     - cron: "*/1 * * * *"
 
+
 jobs:
   pipeline:
     runs-on: ubuntu-latest
@@ -14,10 +15,10 @@ jobs:
 
       - name: Check last commit date
         id: commit_date
-        run: echo "::set-output name=date::$(git show -s --format=%cd --date=format:%Y-%m-%d)"
+        run: echo "::set-output name=date::$(git log --format=%cd --date=format:%Y-%m-%d --max-count=1)"
 
       - name: Run pipeline if there was a commit this week
-        if: ${{ steps.commit_date.outputs.date != format('{0:yyyy-MM-dd}', github.event.scheduled_time) }}
+        if: ${{ steps.commit_date.outputs.date && steps.commit_date.outputs.date != format('{0:yyyy-MM-dd}', github.event.scheduled_time) }}
         run: |
           # Run your pipeline commands here
           echo "Running the pipeline..."
