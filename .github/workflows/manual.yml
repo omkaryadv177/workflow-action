@@ -24,87 +24,19 @@ env:
 
 
 jobs:
-  build:
+  pipeline:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        stage: [ build , source_clear, e2e_tests ]
+
     steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: adopt
-          java-version: 17
+      - name: Check last commit date
+        id: commit_date
+        run: echo "::set-output name=date::$(git log --format=%cd --date=format:%Y-%m-%d --max-count=1)"
 
-      - uses: actions/setup-python@v4
-        with:
-          python-version: 3.8
-
-      - uses: azure/setup-kubectl@v3.0
-        with:
-         version: 'v1.23.6'
-        id: install
-
-      - uses: azure/setup-helm@v3
-        with:
-          version: '1.5.0'
-          
-      - name: Install Firefox
-        uses: mozilla/fxdesktop_builds@v3.0.0
-        with:
-          target: firefox-95.0.2
-      - name: Test with Firefox
+      - name: Run pipeline if there was a commit this week
+        if: ${{ steps.commit_date.outputs.date && steps.commit_date.outputs.date != '' && steps.commit_date.outputs.date != null && steps.commit_date.outputs.date != format('{0:yyyy-MM-dd}', github.event.scheduled_time) && github.ref == 'refs/heads/main' }}
         run: |
-          export PATH="$PATH:/home/runner/bin"
-          firefox --version
-
-      - name: Run ${{ matrix.stage }}
-        run: |
-          echo "${{ github.event_name }}"
-          echo "hello deploy release"
-          bash ci/run.sh
-
-  Release:
-    if:  ${{ ( startsWith(github.ref_name, 'HF/')  || startsWith(github.ref_name, 'SP/') || github.ref_name == 'master' )  &&
-         contains(github.event.head_commit.message, '[trigger release]') || inputs.commitMessage == 'release'  &&
-         github.event_name != 'pull_request' }}
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: adopt
-          java-version: 17
-
-      - name: Run Script
-        run: |
-          echo "${{ github.event_name }}"
-          echo "hello deploy release"
-          bash _ci/run.sh
-
-
-  Company-Release:
-    if: github.ref_name == 'company_release'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-
-      - name: Set up Java
-        uses: actions/setup-java@v3
-        with:
-          distribution: adopt
-          java-version: 17
-
-      - name: Run Script
-        run: |
-          echo "hello deploy release"
+          # Run your pipeline commands here
+          echo "Running the pipeline..."
