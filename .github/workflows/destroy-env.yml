@@ -1,20 +1,23 @@
-name: Destroy env
+name: Weekly Pipeline
 
 on:
-  workflow_dispatch:
-    inputs:
-      github_run_number:
-        type: string
-        required: true
-        description: Enter the github run number of which env is created
+  schedule:
+    - cron: "*/5 * * * *"
 
 jobs:
-  destroy-env:
+  pipeline:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v3
-      - uses: azure/setup-kubectl@v2.0
-      - name: "hello"
-        env:
-          GIT_NUMBER: ${{ inputs.github_run_number }}
-        run: echo $GIT_NUMBER
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Check last commit date
+        id: commit_date
+        run: echo "::set-output name=date::$(git show -s --format=%cd --date=format:%Y-%m-%d)"
+
+      - name: Run pipeline if there was a commit this week
+        if: ${{ steps.commit_date.outputs.date != format('{0:yyyy-MM-dd}', github.event.scheduled_time) }}
+        run: |
+          # Run your pipeline commands here
+          echo "Running the pipeline..."
