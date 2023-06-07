@@ -1,9 +1,5 @@
 name: Weekly Pipeline
 
-on:
-  schedule:
-    - cron: "*/1 * * * *"
-
 
 jobs:
   pipeline:
