@@ -33,15 +33,3 @@ jobs:
       
       - name: Setup tmate session
         uses: mxschmitt/action-tmate@v3
-
-      - name: Get commit date
-        id: commit_date
-        run: |
-          COMMIT_DATE=$(git log --format=%cd --date=format:%Y-%m-%d --max-count=1 master)
-          echo "::set-output name=date::$COMMIT_DATE"
-
-      - name: Run pipeline if there was a commit this week
-        if: ${{ steps.commit_date.outputs.date && steps.commit_date.outputs.date != github.event.scheduled_time.substring(0, 10) && github.ref == 'refs/heads/main' }}
-        run: |
-          # Run your pipeline commands here
-          echo "Running the pipeline..."
