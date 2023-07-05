@@ -10,7 +10,7 @@ def install_java_18():
     java_extract_dir = "/tmp/java-18"
 
     # Download the Java installation file.
-    subprocess.run(["curl", "-L", java_download_url, "-o", java_file_name])
+    subprocess.call(["curl", "-L", "-o", java_file_name, java_download_url])
 
     # Extract the Java installation file.
     shutil.unpack_archive(java_file_name, java_extract_dir)
