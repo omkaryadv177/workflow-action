@@ -16,7 +16,7 @@ def install_java_18():
     shutil.unpack_archive(java_file_name, java_extract_dir)
 
     # Set the `JAVA_HOME` environment variable.
-    os.environ["JAVA_HOME"] = f"{java_extract_dir}/jdk-18"
+    os.environ["JAVA_HOME"] = java_extract_dir + "/jdk-18"
 
     # Verify that Java 18 is installed.
     os.system("java -version")
