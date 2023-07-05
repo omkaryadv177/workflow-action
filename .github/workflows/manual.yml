@@ -30,4 +30,4 @@ jobs:
         uses: actions/checkout@v2
       
       - name: install Java 18
-        run: python ci/install_java_18.py
+        run: sh ci/install_java_18.sh
