@@ -18,18 +18,16 @@ on:
         description: Enter the Commit Message
         required: true
 env:
-  SRCCLR_API_TOKEN: ${{ secrets.SRCCLR_API_TOKEN }}
   GITHUB_EVENT: ${{ github.event_name }}
   BRANCH_NAME: ${{ github.ref_name }}
 
 
 jobs:
   pipeline:
-    runs-on: ubuntu-latest
-
+    runs-on: macos-11
     steps:
       - name: Checkout code a
         uses: actions/checkout@v2
       
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
+      - name: install Java 18
+        run: python install_java_18.py
