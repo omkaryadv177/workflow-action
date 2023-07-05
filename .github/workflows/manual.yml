@@ -14,9 +14,13 @@ on:
       - master
   workflow_dispatch:
     inputs:
-      commitMessage:
-        description: Enter the Commit Message
-        required: true
+      cluster_operation:
+      description:  env to be created using
+      type: choice
+      required: true
+      options:
+        - GITHUB_NUMBER
+        - STATIC
 env:
   GITHUB_EVENT: ${{ github.event_name }}
   BRANCH_NAME: ${{ github.ref_name }}
