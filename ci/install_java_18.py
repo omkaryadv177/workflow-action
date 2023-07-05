@@ -1,4 +1,6 @@
 import os
+import shutil
+import subprocess
 
 def install_java_18():
     """Installs Java 18 on macOS."""
@@ -8,13 +10,13 @@ def install_java_18():
     java_extract_dir = "/tmp/java-18"
 
     # Download the Java installation file.
-    os.system("curl -L {} -o {}".format(java_download_url, java_file_name))
+    subprocess.run(["curl", "-L", java_download_url, "-o", java_file_name])
 
     # Extract the Java installation file.
-    os.system("tar -xzf {} -C {}".format(java_file_name, java_extract_dir))
+    shutil.unpack_archive(java_file_name, java_extract_dir)
 
     # Set the `JAVA_HOME` environment variable.
-    os.environ["JAVA_HOME"] = "{}/jdk-18".format(java_extract_dir)
+    os.environ["JAVA_HOME"] = f"{java_extract_dir}/jdk-18"
 
     # Verify that Java 18 is installed.
     os.system("java -version")
