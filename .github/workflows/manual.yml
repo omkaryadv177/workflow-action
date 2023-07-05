@@ -14,13 +14,15 @@ on:
       - master
   workflow_dispatch:
     inputs:
-      cluster_operation:
-      description:  env to be created using
-      type: choice
-      required: true
-      options:
-        - GITHUB_NUMBER
-        - STATIC
+      OM:
+        description: the desired NAME 
+        type: choice
+        required: true
+        options:
+          - ABC
+          - DC
+          - AS
+        default: ABC
 env:
   GITHUB_EVENT: ${{ github.event_name }}
   BRANCH_NAME: ${{ github.ref_name }}
