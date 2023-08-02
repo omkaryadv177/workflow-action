@@ -27,5 +27,4 @@ jobs:
       # For example:
       - name: Build and Test with Java ${{ matrix.java_version }}
         run: |
-           mvn clean install 
-
+          mvn clean install
