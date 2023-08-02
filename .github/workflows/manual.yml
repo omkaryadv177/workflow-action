@@ -1,39 +1,31 @@
-name: dsync services
+name: Parallel Matrix Jobs
 
 on:
   push:
     branches:
-      - omkar
-      - master
-      - 'SP/**'
-      - 'HF/**'
-      - company_release
-      - 'GOOGLEDOCS**'
-  pull_request:
-    branches:
-      - master
-  workflow_dispatch:
-    inputs:
-      OM:
-        description: the desired NAME 
-        type: choice
-        required: true
-        options:
-          - ABC
-          - DC
-          - AS
-        default: ABC
-env:
-  GITHUB_EVENT: ${{ github.event_name }}
-  BRANCH_NAME: ${{ github.ref_name }}
-
+      - main
 
 jobs:
-  pipeline:
-    runs-on: macos-11
+  build_and_test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        java_version: [17, 11]
+
     steps:
-      - name: Checkout code a
+      - name: Checkout code
         uses: actions/checkout@v2
-      
-      - name: install Java 18
-        run: sh ci/install_java_18.sh
+
+      - name: Set up JDK ${{ matrix.java_version }}
+        if: ${{ github.event_name == 'pull_request' || matrix.java_version == 17 }}
+        uses: actions/setup-java@v2
+        with:
+          java-version: ${{ matrix.java_version }}
+
+      # Add your build and test steps here
+      # For example:
+      - name: Build and Test with Java ${{ matrix.java_version }}
+        run: |
+           mvn clean install 
+
